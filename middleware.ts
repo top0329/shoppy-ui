@@ -1,13 +1,22 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import authenticated from "./app/auth/authenticated";
+import { unauthenticatedRoutes } from "./app/common/constants/routes";
 
-const unauthorizedRoutes = ["/auth/login", "/auth/signup"];
+export async function middleware(request: NextRequest) {
+  const isAuthenticated = await authenticated();
+  const isUnauthenticatedRoute = unauthenticatedRoutes.some((route) =>
+    request.nextUrl.pathname.startsWith(route.path)
+  );
 
-export function middleware(request: NextRequest) {
-  const auth = request.cookies.get("Authentication")?.value;
-
-  if (!auth && unauthorizedRoutes.some(route => request.nextUrl.pathname.startsWith(route))) {
-    return Response.redirect(new URL("/auth/login", request.url))
+  if (isUnauthenticatedRoute) {
+    return NextResponse.next();
   }
+
+  if (!isAuthenticated) {
+    return NextResponse.redirect(new URL("/auth/login", request.url));
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
