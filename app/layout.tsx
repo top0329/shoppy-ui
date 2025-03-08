@@ -5,6 +5,7 @@ import { Container, CssBaseline, ThemeProvider } from "@mui/material";
 
 import "./globals.css";
 import darkTheme from "./dark.theme";
+import Header from "./header/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={darkTheme}>
             <CssBaseline />
+            <Header />
             <Container>{children}</Container>
           </ThemeProvider>
         </AppRouterCacheProvider>
