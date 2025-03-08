@@ -18,12 +18,14 @@ export default function Signup() {
           type="email"
           helperText={state.error}
           error={!!state.error}
-        />
+          />
         <TextField
           name="password"
           label="Password"
           variant="outlined"
           type="password"
+          helperText={state.error}
+          error={!!state.error}
         />
         <Button type="submit" variant="contained">
           Signup
