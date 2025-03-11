@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { API_URL } from "../constants/api";
 import { getErrorMessage } from "./errors";
 
-const getHeaders = async () => ({
+export const getHeaders = async () => ({
   Cookie: (await cookies()).toString(),
 });
 
@@ -16,7 +16,7 @@ export const post = async (path: string, formData: FormData) => {
   if (!res.ok) {
     return { error: getErrorMessage(parsedRes) };
   }
-  return { error: "" };
+  return { error: "", data: parsedRes };
 };
 
 export const get = async <T>(path: string, tags?: string[]) => {

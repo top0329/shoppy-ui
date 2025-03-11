@@ -1,7 +1,15 @@
 "use client";
 
-import { Box, Button, Modal, Stack, TextField } from "@mui/material";
-import { useState } from "react";
+import { CSSProperties, useState } from "react";
+import {
+  Box,
+  Button,
+  Modal,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { FormResponse } from "../../common/interfaces/form-response.interface";
 import createProduct from "../actions/create-product";
 
@@ -17,6 +25,18 @@ const styles = {
   p: 4,
 };
 
+const fileInputStyles: CSSProperties = {
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+};
+
 interface CreateProductModalProps {
   open: boolean;
   handleClose: () => void;
@@ -27,10 +47,12 @@ export default function CreateProductModal({
   handleClose,
 }: CreateProductModalProps) {
   const [response, setResponse] = useState<FormResponse>();
+  const [fileName, setFileName] = useState<string>("");
 
   const onClose = () => {
     setResponse(undefined);
     handleClose();
+    setFileName("");
   };
 
   return (
@@ -71,6 +93,24 @@ export default function CreateProductModal({
               helperText={response?.error}
               error={!!response?.error}
             />
+            <Button
+              component="label"
+              variant="outlined"
+              startIcon={<CloudUploadIcon />}
+            >
+              Upload File
+              <input
+                type="file"
+                name="image"
+                style={fileInputStyles}
+                onChange={(e) => {
+                  if (e.target.files && e.target.files.length > 0) {
+                    setFileName(e.target.files[0].name);
+                  }
+                }}
+              />
+            </Button>
+            <Typography>{fileName}</Typography>
             <Button type="submit" variant="contained">
               Submit
             </Button>
