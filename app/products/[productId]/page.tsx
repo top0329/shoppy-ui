@@ -1,7 +1,8 @@
-import { Stack, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid2";
-import getProduct from "./get-product";
 import Image from "next/image";
+import Grid from "@mui/material/Grid2";
+import { Stack, Typography } from "@mui/material";
+import Checkout from "@/app/checkout/checkout";
+import getProduct from "./get-product";
 import { getProductImage } from "../product-image";
 
 interface SinpgleProductProps {
@@ -30,6 +31,7 @@ export default async function SingpleProduct({ params }: SinpgleProductProps) {
           <Typography variant="h2">{product.name}</Typography>
           <Typography>{product.description}</Typography>
           <Typography variant="h4">${product.price}</Typography>
+          <Checkout productId={product.id} />
         </Stack>
       </Grid>
     </Grid>
