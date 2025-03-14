@@ -30,5 +30,5 @@ export const get = async <T>(
     headers: { ...(await getHeaders()) },
     next: { tags },
   });
-  return res.json() as T;
+  return (await res.json()) as T;
 };

@@ -5,13 +5,14 @@ import Checkout from "@/app/checkout/checkout";
 import getProduct from "./get-product";
 import { getProductImage } from "../product-image";
 
-interface SinpgleProductProps {
-  params: { productId: string };
+interface SingleProductProps {
+  params: Promise<{ productId: string }>;
 }
 
-export default async function SingpleProduct({ params }: SinpgleProductProps) {
+export default async function SingpleProduct({ params }: SingleProductProps) {
   const { productId } = await params;
   const product = await getProduct(+productId);
+
   return (
     <Grid container marginBottom={"2rem"} rowGap={3}>
       {product.imageExists && (
